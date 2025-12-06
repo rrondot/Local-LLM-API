@@ -6,7 +6,7 @@ from .ollama_client import generate
 app = FastAPI()
 
 class ChatRequest(BaseModel):
-    model: str = "llama3.1"
+    model: str = "llama3.1:8b"
     prompt: str
 
 @app.get("/health")
