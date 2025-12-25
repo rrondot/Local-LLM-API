@@ -1,7 +1,5 @@
-# Ignore virtual environment
 venv/
 fastapi-env/
-# Ignore Python cache
 __pycache__/
 */__pycache__/
 *.pyc
