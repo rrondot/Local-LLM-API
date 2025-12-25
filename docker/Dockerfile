@@ -1,11 +1,18 @@
+<<<<<<< HEAD
 FROM nvidia/cuda:12.1.0-runtime-ubuntu22.04
 
 # Install Python and dependencies
+=======
+
+FROM nvidia/cuda:12.1.0-runtime-ubuntu22.04
+
+>>>>>>> 3be9db7ec30882e9496cfa7586d5a69212aafc3c
 RUN apt-get update && apt-get install -y \
     python3.10 \
     python3-pip \
     && rm -rf /var/lib/apt/lists/*
 
+<<<<<<< HEAD
 # Install vLLM (optimized for inference)
 RUN pip3 install vllm==0.5.0 fastapi uvicorn
 
@@ -14,6 +21,12 @@ RUN pip3 install vllm==0.5.0 fastapi uvicorn
 RUN python3 -c "from vllm import LLM; LLM('facebook/opt-125m')"
 
 # API server
+=======
+
+RUN pip3 install --no-cache-dir vllm==0.5.0 fastapi uvicorn
+
+
+>>>>>>> 3be9db7ec30882e9496cfa7586d5a69212aafc3c
 COPY app.py /app/app.py
 WORKDIR /app
 

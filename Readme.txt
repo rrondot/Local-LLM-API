@@ -13,3 +13,5 @@ uvicorn app.main:app --reload --host 0.0.0.0 --port 8000
 Test the llm with the API using test.py
 Display Token usage, latency of generation and token per sec + memory usage with benchmark.py
 Generate a report with generate_report.py
+
+App has been containerized, visit the Readme file in the docker folder
