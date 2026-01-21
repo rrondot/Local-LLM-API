@@ -1,6 +1,6 @@
 # LLM API Project
 
-A FastAPI-based application for interacting with Ollama language models, featuring comprehensive benchmarking and reporting tools.
+A FastAPI application for interacting with Ollama language models with benchmarking tools.
 
 ## Prerequisites
 
@@ -69,7 +69,7 @@ python generate_report.py
 
 ## Docker Deployment
 
-This application has been containerized for easy deployment with GPU support.
+Docker deployment with GPU support.
 
 ### Build the Container
 
@@ -78,16 +78,6 @@ docker build -t llm-api:v1 .
 ```
 
 ### Run with Different Models
-
-#### TinyLlama (Recommended for Testing)
-
-```bash
-docker run --gpus all -p 8000:8000 \
-  -e MODEL_NAME="TinyLlama/TinyLlama-1.1B-Chat-v1.0" \
-  llm-api:v1
-```
-
-#### OPT-125M (Faster but Lower Quality)
 
 ```bash
 docker run --gpus all -p 8000:8000 \

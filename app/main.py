@@ -25,8 +25,8 @@ def chat(req: ChatRequest):
         if response and "response" in response:
             return {"response": response["response"]}
         else:
-            raise HTTPException(status_code=500, detail=f"Unexpected response format: {response}")
+            raise HTTPException(status_code=500, detail="Invalid response format")
     except requests.exceptions.RequestException as e:
-        raise HTTPException(status_code=502, detail=f"Ollama service error: {str(e)}")
+        raise HTTPException(status_code=502, detail=str(e))
     except Exception as e:
-        raise HTTPException(status_code=500, detail=f"Internal error: {str(e)}")
+        raise HTTPException(status_code=500, detail=str(e))

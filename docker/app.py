@@ -13,7 +13,6 @@ app = FastAPI()
 
 MODEL_NAME = os.getenv("MODEL_NAME", "facebook/opt-125m")
 
-logger.info(f"Loading model: {MODEL_NAME}")
 try:
     llm = LLM(
         model=MODEL_NAME,
@@ -23,7 +22,6 @@ try:
         dtype="float16", 
         trust_remote_code=True
     )
-    logger.info("Model loaded successfully!")
 except Exception as e:
     logger.error(f"Failed to load model: {e}")
     raise
@@ -42,7 +40,6 @@ class ChatResponse(BaseModel):
 
 @app.get("/health")
 def health():
-    """Health check endpoint"""
     return {
         "status": "healthy",
         "model": MODEL_NAME,
@@ -51,7 +48,6 @@ def health():
 
 @app.post("/chat", response_model=ChatResponse)
 def chat(request: ChatRequest):
-    """Generate text completion"""
     start = time.time()
     
     try:
@@ -76,7 +72,6 @@ def chat(request: ChatRequest):
 
 @app.get("/metrics")
 def metrics():
-    """Basic metrics for monitoring"""
     return {
         "model": MODEL_NAME,
         "status": "running"
