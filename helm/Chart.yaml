@@ -9,9 +9,8 @@ keywords:
   - ollama
   - fastapi
   - ai
-home: https://github.com/your-org/llm-api
+home: https://github.com/rrondot/Local-LLM-API/
 sources:
-  - https://github.com/your-org/llm-api
+  - https://github.com/rrondot/Local-LLM-API/
 maintainers:
-  - name: Your Name
-    email: your.email@example.com
+  - name: rrondot
