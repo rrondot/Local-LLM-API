@@ -1,6 +1,7 @@
 import requests
+import os
 
-OLLAMA_URL = "http://localhost:11434"
+OLLAMA_URL = os.getenv("OLLAMA_URL", "http://ollama-service:11434")
 
 def generate(model: str, prompt: str, stream: bool = False):
     payload = {
@@ -8,7 +9,7 @@ def generate(model: str, prompt: str, stream: bool = False):
         "prompt": prompt,
         "stream": stream
     }
-    r = requests.post(f"{OLLAMA_URL}/api/generate", json=payload, stream=stream)
+    r = requests.post(f"{OLLAMA_URL}/api/generate", json=payload, stream=stream, timeout=60)
     
     if not stream:
         r.raise_for_status()

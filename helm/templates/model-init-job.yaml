@@ -1,0 +1,35 @@
+{{- if .Values.modelInit.enabled }}
+apiVersion: batch/v1
+kind: Job
+metadata:
+  name: {{ include "llm-api.fullname" . }}-model-init
+  labels:
+    {{- include "llm-api.labels" . | nindent 4 }}
+    app.kubernetes.io/component: model-init
+spec:
+  template:
+    metadata:
+      labels:
+        {{- include "llm-api.selectorLabels" . | nindent 8 }}
+        app.kubernetes.io/component: model-init
+    spec:
+      restartPolicy: OnFailure
+      containers:
+      - name: model-downloader
+        image: curlimages/curl:latest
+        imagePullPolicy: IfNotPresent
+        command: 
+        - /bin/sh
+        - -c
+        - |
+          echo "Waiting for Ollama service to be ready..."
+          until curl -f http://{{ include "llm-api.fullname" . }}-ollama:{{ .Values.ollama.service.port }}/api/tags; do
+            echo "Ollama not ready, waiting..."
+            sleep 10
+          done
+          echo "Ollama is ready, pulling model {{ .Values.modelInit.model }}..."
+          curl -X POST http://{{ include "llm-api.fullname" . }}-ollama:{{ .Values.ollama.service.port }}/api/pull \
+            -d '{"name": "{{ .Values.modelInit.model }}"}'
+          echo "Model pull initiated"
+  backoffLimit: 3
+{{- end }}

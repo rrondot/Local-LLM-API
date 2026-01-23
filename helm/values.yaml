@@ -1,0 +1,54 @@
+# Default values for llm-api
+replicaCount: 1
+
+api:
+  image:
+    repository: rrondot/llm-api
+    pullPolicy: IfNotPresent
+    tag: "latest"
+  
+  service:
+    type: NodePort
+    port: 80
+    targetPort: 8000
+    nodePort: 30000
+  
+  resources:
+    limits:
+      cpu: 500m
+      memory: 512Mi
+    requests:
+      cpu: 250m
+      memory: 256Mi
+
+ollama:
+  image:
+    repository: ollama/ollama
+    pullPolicy: IfNotPresent
+    tag: "latest"
+  
+  service:
+    type: ClusterIP
+    port: 11434
+    targetPort: 11434
+  
+  resources:
+    limits:
+      cpu: 2000m
+      memory: 8Gi
+    requests:
+      cpu: 1000m
+      memory: 5Gi
+  
+  persistence:
+    enabled: true
+    storageClass: ""
+    accessMode: ReadWriteOnce
+    size: 10Gi
+
+modelInit:
+  enabled: true
+  model: "llama3.1:8b"
+
+serviceAccount:
+  create: true

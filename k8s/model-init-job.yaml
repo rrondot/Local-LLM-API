@@ -1,0 +1,24 @@
+apiVersion: batch/v1
+kind: Job
+metadata:
+  name: ollama-model-init
+spec:
+  template:
+    spec:
+      containers:
+      - name: model-downloader
+        image: curlimages/curl:latest
+        command: 
+        - /bin/sh
+        - -c
+        - |
+          echo "Waiting for Ollama service to be ready..."
+          until curl -f http://ollama-service:11434/api/tags; do
+            echo "Ollama not ready, waiting..."
+            sleep 10
+          done
+          echo "Ollama is ready, pulling model..."
+          curl -X POST http://ollama-service:11434/api/pull -d '{"name": "llama3.1:8b"}'
+          echo "Model pull initiated"
+      restartPolicy: OnFailure
+  backoffLimit: 3
