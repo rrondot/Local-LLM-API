@@ -67,43 +67,6 @@ Generate a comprehensive performance report:
 python generate_report.py
 ```
 
-## Docker Deployment
-
-Docker deployment with GPU support.
-
-### Build the Container
-
-```bash
-docker build -t llm-api:v1 .
-```
-
-### Run with Different Models
-
-```bash
-docker run --gpus all -p 8000:8000 \
-  -e MODEL_NAME="facebook/opt-125m" \
-  llm-api:v1
-```
-
-### Test the Docker Deployment
-
-Check API health:
-
-```bash
-curl http://localhost:8000/health
-```
-
-Generate text:
-
-```bash
-curl -X POST http://localhost:8000/chat \
-  -H "Content-Type: application/json" \
-  -d '{
-    "prompt": "Explain baseball in one sentence",
-    "max_tokens": 50
-  }'
-```
-
 ## API Endpoints
 
 - `GET /health` - Check API health status
