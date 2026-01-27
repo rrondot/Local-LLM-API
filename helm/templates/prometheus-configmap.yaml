@@ -1,0 +1,24 @@
+{{- if .Values.prometheus.enabled }}
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: {{ include "llm-api.fullname" . }}-prometheus-config
+  labels:
+    {{- include "llm-api.labels" . | nindent 4 }}
+    app.kubernetes.io/component: prometheus
+data:
+  prometheus.yml: |
+    global:
+      scrape_interval: {{ .Values.prometheus.scrapeInterval }}
+      evaluation_interval: {{ .Values.prometheus.evaluationInterval }}
+
+    scrape_configs:
+      - job_name: 'llm-api'
+        static_configs:
+          - targets: ['{{ include "llm-api.fullname" . }}-api:{{ .Values.api.service.port }}']
+        metrics_path: '/metrics'
+
+      - job_name: 'prometheus'
+        static_configs:
+          - targets: ['localhost:9090']
+{{- end }}

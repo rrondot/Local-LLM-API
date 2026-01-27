@@ -4,3 +4,4 @@ requests
 pydantic
 httpx
 psutil
+prometheus-client==0.19.0

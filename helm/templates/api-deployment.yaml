@@ -13,11 +13,14 @@ spec:
       app.kubernetes.io/component: api
   template:
     metadata:
+      annotations:
+        prometheus.io/scrape: "true"
+        prometheus.io/port: "8000"
+        prometheus.io/path: "/metrics"
       labels:
         {{- include "llm-api.selectorLabels" . | nindent 8 }}
         app.kubernetes.io/component: api
     spec:
-      serviceAccountName: {{ include "llm-api.serviceAccountName" . }}
       containers:
         - name: api
           image: "{{ .Values.api.image.repository }}:{{ .Values.api.image.tag }}"
@@ -25,10 +28,11 @@ spec:
           ports:
             - name: http
               containerPort: {{ .Values.api.service.targetPort }}
-              protocol: TCP
           env:
             - name: OLLAMA_URL
               value: "http://{{ include "llm-api.fullname" . }}-ollama:{{ .Values.ollama.service.port }}"
+            - name: DEFAULT_MODEL
+              value: {{ .Values.api.env.DEFAULT_MODEL | quote }}
           livenessProbe:
             httpGet:
               path: /health
