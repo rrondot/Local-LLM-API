@@ -9,6 +9,17 @@ from ollama_client import generate
 
 app = FastAPI()
 
+API_KEY = os.getenv("API_KEY")
+api_key_header = APIKeyHeader(name="X-API-Key", auto_error=False)
+
+def verify_api_key(key: str = Security(api_key_header)):
+    if not API_KEY:
+        return None
+    if key != API_KEY:
+        raise HTTPException(status_code=403, detail="Invalid API key")
+    return key
+
+
 registry = CollectorRegistry()
 
 REQUEST_COUNT = Counter('llm_requests_total', 'Total requests', ['model', 'status'], registry=registry)
@@ -47,7 +58,7 @@ def health():
     }
 
 @app.post("/chat", response_model=ChatResponse)
-def chat(request: ChatRequest):
+def chat(request: ChatRequest, api_key: str = Security(verify_api_key)):
     start = time.time()
     model = request.model
     
