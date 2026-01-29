@@ -33,6 +33,11 @@ spec:
               value: "http://{{ include "llm-api.fullname" . }}-ollama:{{ .Values.ollama.service.port }}"
             - name: DEFAULT_MODEL
               value: {{ .Values.api.env.DEFAULT_MODEL | quote }}
+            - name : API_KEY
+              valueFrom:
+                secretKeyRef:
+                  name: {{ include "llm-api.fullname" . }}-secrets
+                  key: API_KEY
           livenessProbe:
             httpGet:
               path: /health
