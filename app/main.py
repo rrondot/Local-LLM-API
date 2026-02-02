@@ -1,5 +1,6 @@
-from fastapi import FastAPI, HTTPException
+from fastapi import FastAPI, HTTPException, Security
 from fastapi.responses import Response
+from fastapi.security import APIKeyHeader
 from pydantic import BaseModel
 import time
 import os

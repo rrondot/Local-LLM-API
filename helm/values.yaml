@@ -8,6 +8,7 @@ api:
   service:
     type: ClusterIP
     port: 80
+    targetPort: 8000
 
   resources:
     limits:
@@ -41,7 +42,7 @@ ollama:
   
   persistence:
     enabled: true
-    storageClass: "efs-sc"
+    storageClass: "efs"
     accessMode: ReadWriteOnce
     size: 10Gi
 
@@ -60,6 +61,7 @@ prometheus:
   service:
     type: ClusterIP
     port: 9090
+    targetPort: 9090
 
   
   resources:
@@ -72,7 +74,7 @@ prometheus:
   
   persistence:
     enabled: true
-    storageClass: ""
+    storageClass: "efs"
     accessMode: ReadWriteOnce
     size: 10Gi
   
@@ -91,6 +93,7 @@ grafana:
   service:
     type: ClusterIP
     port: 3000
+    targetPort: 3000
 
   
   resources:
@@ -103,7 +106,7 @@ grafana:
   
   persistence:
     enabled: true
-    storageClass: "efs-sc"
+    storageClass: "efs"
     accessMode: ReadWriteOnce
     size: 5Gi
 
