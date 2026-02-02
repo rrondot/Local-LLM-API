@@ -43,7 +43,7 @@ ollama:
   persistence:
     enabled: true
     storageClass: "efs"
-    accessMode: ReadWriteOnce
+    accessMode: ReadWriteMany
     size: 10Gi
 
 modelInit:
@@ -75,7 +75,7 @@ prometheus:
   persistence:
     enabled: true
     storageClass: "efs"
-    accessMode: ReadWriteOnce
+    accessMode: ReadWriteMany
     size: 10Gi
   
   retention: 15d
@@ -107,7 +107,7 @@ grafana:
   persistence:
     enabled: true
     storageClass: "efs"
-    accessMode: ReadWriteOnce
+    accessMode: ReadWriteMany
     size: 5Gi
 
   
